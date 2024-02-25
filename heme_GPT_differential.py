@@ -191,7 +191,7 @@ def load_config(config_path):
 
 if __name__ == "__main__":
     API_KEY, API_ENDPOINT = load_config('config.json')  
-    df = pd.read_csv("/home/hasan/Projects/heme_gpt/gpt_heme_diff_input_v7.csv")
+    df = pd.read_csv("gpt_heme_diff_input_v7.csv")
     #df = df[df['Conclusion'] == 'YES']
     #df = df[df['Dx_Cat'] == 'Normal']
 
