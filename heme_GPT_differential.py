@@ -76,33 +76,6 @@ def heme_report_gen(prompt, API_KEY, API_ENDPOINT, model=gpt, temperature=1, max
     else:
         raise Exception(f"Error {response.status_code}: {response.text}")
 
-def construct_prompt(row, bmCols, cbcCols):
-    prompt = """
-While acting as a hematopathologist, use the following patient information to fill out the questionnaire. Your responses will be imported into a pandas dataframe so please limit them to short phrases only. You will come up with THREE differential diagnoses for the patient from the list of diagnoses below. List them in decreasing order of likeliness. Then you will decide the type of FLOW most suitable for the patient's case (Myeloid or Lymphoid). Lastly, you will list the immunohistochemical stains you would order to narrow the differential and make a diagnosis. Finally, please provide a one sentence justification of the diagnosis you have chosen.
-
-Possible Diagnoses: Normal, Acute Myeloid Leukemia, Mature B-Cell neoplasm, B-ALL, T-ALL, Acute Lymphoblastic Leukemia, Chronic Lymphocytic Leukemia, Plasma Cell Myeloma, Chronic Myeloid Leukemia, Myelodysplastic syndrome, Myeloproliferative Neoplasm
-
-Questionnaire:
-Differential Diagnosis 1:
-Differential Diagnosis 2:
-Differential Diagnosis 3:
-Type of FLOW: (Myeloid or Lymphoid)
-IHC: (List the immunohistochemical stains you would order to narrow the differential and make a diagnosis)
-Justification: (Please provide a one sentence justification of the diagnosis you have chosen)
-
-Patient Information:
-
-"""
-    prompt += f"Patient Age: {row['Age']}\n"
-    prompt += "Bone Marrow Differential values:\n"
-    bm_values = [f"{col}: {row[col]}" for col in bmCols if col in row]
-    prompt += "\n".join(bm_values) + "\n\n"
-    prompt += "Peripheral Blood CBC:\n"
-    cbc_values = [f"{col}: {row[col]}" for col in cbcCols if col in row]
-    prompt += "\n".join(cbc_values) + "\n"
-
-    return prompt
-
 def construct_cat_prompt(row, bmCols, cbcCols):
     prompt = """
 While acting as a hematopathologist, use the following patient information to fill out the questionnaire. Your responses will be imported into a Pandas dataframe so please limit them to short phrases only. You will select three three diagnosis categories from the provided list. List them in decreasing order of likeliness. Also include a value (0-100) on how confident you are about the diagnosis. Then you will decide the type of FLOW most suitable for the patient's case (Myeloid, Plasma Cell Myeloma or Lymphoid). Lastly, you will list the immunohistochemical stains you would order to make a diagnosis. Finally, please provide a one sentence justification of the diagnosis you have chosen. Don't be afraid to call a case "Normal".
