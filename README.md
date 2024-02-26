@@ -8,7 +8,10 @@ HemePath GPT-4 is an advanced tool designed to leverage the OpenAI GPT-4 model f
 - **Suggests Logical Next Steps in Diagnosiss**: Suggests specific immunohistochemical stains and FLOW cytometry studies to investigate the diagnosis.
 - **Diagnostic Justification**: Provides a concise justification for the recommended diagnosis, aiding in clinical decision-making.
 
-## Getting Started
+## Results
+
+![Normalized Confusion Matrix of Hematological Diseases](https://github.com/hbilal-md/HemePath-GPT-4/blob/main/normalized_CM.png)
+
 
 ### Prerequisites
 - Python 3.x
